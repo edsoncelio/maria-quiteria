@@ -8,6 +8,8 @@ from configurations import Configuration, values
 from sentry_dramatiq import DramatiqIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 
+from socket import gethostname, gethostbyname
+
 sentry_sdk.init(
     dsn=os.getenv("SENTRY_DSN"),
     integrations=[DjangoIntegration(), DramatiqIntegration()],
@@ -25,7 +27,7 @@ class Common(Configuration):
 
     DEBUG = False
 
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = [ gethostname(), gethostbyname(gethostname()), ]
     INSTALLED_APPS = [
         "web.home.apps.HomeConfig",
         "public_admin",
