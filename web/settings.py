@@ -27,7 +27,7 @@ class Common(Configuration):
 
     DEBUG = False
 
-    ALLOWED_HOSTS = [ gethostname(), gethostbyname(gethostname()), ]
+    ALLOWED_HOSTS = []
     INSTALLED_APPS = [
         "web.home.apps.HomeConfig",
         "public_admin",
@@ -166,5 +166,6 @@ class Test(Dev):
 class Prod(Common):
     SECRET_KEY = values.SecretValue()
     ALLOWED_HOSTS = values.ListValue()
+    ALLOWED_HOSTS.extend((gethostname(), gethostbyname(gethostname()))) 
     DATABASES = {"default": dj_database_url.config(conn_max_age=600, ssl_require=False)}
     GOOGLE_ANALYTICS_KEY = values.Value()
