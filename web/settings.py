@@ -8,6 +8,8 @@ from configurations import Configuration, values
 from sentry_dramatiq import DramatiqIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 
+from socket import gethostname, gethostbyname
+
 sentry_sdk.init(
     dsn=os.getenv("SENTRY_DSN"),
     integrations=[DjangoIntegration(), DramatiqIntegration()],
@@ -164,5 +166,6 @@ class Test(Dev):
 class Prod(Common):
     SECRET_KEY = values.SecretValue()
     ALLOWED_HOSTS = values.ListValue()
+    ALLOWED_HOSTS += [gethostname(), gethostbyname(gethostname())]
     DATABASES = {"default": dj_database_url.config(conn_max_age=600, ssl_require=False)}
     GOOGLE_ANALYTICS_KEY = values.Value()
