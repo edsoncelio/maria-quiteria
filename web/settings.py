@@ -165,7 +165,7 @@ class Test(Dev):
 
 class Prod(Common):
     SECRET_KEY = values.SecretValue()
-    ALLOWED_HOSTS = values.ListValue([],environ_name="DJANGO_ALLOWED_HOSTS")
+    ALLOWED_HOSTS = values.ListValue([],environ_name="ALLOWED_HOSTS")
     ALLOWED_HOSTS.extend((gethostname(), gethostbyname(gethostname())))
     DATABASES = {"default": dj_database_url.config(conn_max_age=600, ssl_require=False)}
     GOOGLE_ANALYTICS_KEY = values.Value()
